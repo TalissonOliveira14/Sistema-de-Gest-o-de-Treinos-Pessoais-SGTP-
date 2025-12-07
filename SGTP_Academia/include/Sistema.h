@@ -1,5 +1,5 @@
-#ifndef GERENCIADOR_H
-#define GERENCIADOR_H
+#ifndef SISTEMA_H
+#define SISTEMA_H
 
 #include <vector>
 #include <string>
@@ -7,24 +7,39 @@
 #include "Ficha.h"
 #include "Historico.h"
 
-class Gerenciador {
+class Sistema {
 private:
     std::string caminhoExercicios;
     std::string caminhoFichas;
     std::string caminhoHistorico;
-
+    
+    std::vector<Exercicio*> exercicios;
+    std::vector<Ficha> fichas;
+    std::vector<Historico> historico;
+    
 public:
-    Gerenciador();
-    Gerenciador(std::string caminhoExercicios, std::string caminhoFichas, std::string caminhoHistorico);
+    Sistema();
+    ~Sistema();
     
-    void salvarExercicios(const std::vector<Exercicio*>& exercicios);
-    std::vector<Exercicio*> carregarExercicios();
+    void cadastrarExercicio();
+    void listarExerciciosAtivos() const;
+    void excluirExercicioLogico(int id);
+    Exercicio* buscarExercicioPorId(int id) const;
     
-    void salvarFichas(const std::vector<Ficha>& fichas);
-    std::vector<Ficha> carregarFichas(const std::vector<Exercicio*>& exercicios);
+    void criarFicha(const std::string& nome);
+    void adicionarExercicioAFicha(int idFicha, int idExercicio);
+    void listarFichas() const;
+    Ficha* buscarFichaPorId(int id);
     
-    void salvarHistorico(const std::vector<Historico>& historico);
-    std::vector<Historico> carregarHistorico();
+    void registrarTreino(int idFicha);
+    void listarHistorico() const;
+    
+    void carregarDados();
+    void salvarDados();
+    
+    int getProximoIdFicha() const;
+    bool exercicioExiste(int id) const;
+    bool fichaExiste(int id) const;
 };
 
 #endif
