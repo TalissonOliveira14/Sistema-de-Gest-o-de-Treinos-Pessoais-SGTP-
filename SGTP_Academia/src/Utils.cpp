@@ -53,7 +53,7 @@ int Utils::lerInt(const std::string& mensagem) {
             std::cin.ignore();
             return valor;
         }
-        std::cout << "Valor invalido. Tente novamente.\n";
+        std::cout << "Valor invalido. Trente novamente.\n";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
