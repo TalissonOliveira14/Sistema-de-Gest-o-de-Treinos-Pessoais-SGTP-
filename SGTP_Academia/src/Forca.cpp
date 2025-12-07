@@ -24,7 +24,7 @@ void Forca::exibirDetalhes() const {
     std::cout << "Tipo: Forca | ";
     std::cout << "Nome: " << nome << " | ";
     std::cout << "Status: " << (ativo ? "Ativo" : "Inativo") << " | ";
-    std::cout << "Carga: " << carga << " kg | ";
+    std::cout << "Carga: " << std::fixed << std::setprecision(2) << carga << " kg | ";
     std::cout << "Series: " << series << " | ";
     std::cout << "Repeticoes: " << repeticoes << " | ";
     std::cout << "Descanso: " << descanso << " s";
