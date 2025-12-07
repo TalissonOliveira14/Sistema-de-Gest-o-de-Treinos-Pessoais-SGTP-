@@ -18,7 +18,6 @@ public:
     double calcularTempo() const override;
     double calcularCalorias() const override;
     void exibirDetalhes() const override;
-    std::string toFileString() const override;
     
     double getCarga() const;
     int getSeries() const;
