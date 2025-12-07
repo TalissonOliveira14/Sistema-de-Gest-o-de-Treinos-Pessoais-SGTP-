@@ -1,9 +1,9 @@
 # Sistema de Gestão de Treinos Pessoais (SGTP)
 
-## Disciplina: Programação Orientada a Objetos
+## Disciplina: Linguagem de Programação 1
 ## Aluno: Talisson Pereira de Oliveira e 
 ## Matrícula: 20230066172,
-## Turma: Linguagem de Programação 1
+## Turno:Vespertino
 
 ## Descrição
 Sistema desenvolvido em C++ para gerenciamento de treinos pessoais, permitindo cadastrar exercícios, criar fichas de treino, calcular tempo e calorias, e registrar histórico de execução.
