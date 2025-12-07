@@ -28,9 +28,6 @@ public:
     double calcularCaloriasTotais() const;
     void exibirDetalhes() const;
     
-    std::string toFileString() const;
-    static Ficha fromFileString(std::string linha, std::vector<Exercicio*> listaExercicios);
-    
     std::vector<Exercicio*> getExercicios() const;
 };
 
