@@ -24,7 +24,7 @@ void Cardio::exibirDetalhes() const {
     std::cout << "Nome: " << nome << " | ";
     std::cout << "Status: " << (ativo ? "Ativo" : "Inativo") << " | ";
     std::cout << "Duracao: " << duracao << " min | ";
-    std::cout << "Calorias/min: " << caloriasPorMinuto;
+    std::cout << "Calorias/min: " << std::fixed << std::setprecision(2) << caloriasPorMinuto;
 }
 
 int Cardio::getDuracao() const {
