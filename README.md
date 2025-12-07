@@ -1,8 +1,8 @@
 # Sistema de Gestão de Treinos Pessoais (SGTP)
 
 ## Disciplina: Linguagem de Programação 1
-## Aluno: Talisson Pereira de Oliveira e Pedro Mendes
-## Matrícula: 20230066172,
+## Aluno: Talisson Pereira de Oliveira e Pedro Henrique Mendes Fernandes
+## Matrícula: 20230066172, 20240061527
 ## Turno:Vespertino
 
 ## Descrição
