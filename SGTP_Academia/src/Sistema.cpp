@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <iomanup>
+#include <iomanip>
 
 Sistema::Sistema() {
     caminhoExercicios = "data/exercicios.txt";
@@ -175,7 +175,6 @@ void Sistema::listarHistorico() const {
 }
 
 void Sistema::carregarDados() {
-    // Carregar exercícios
     std::ifstream arqExercicios(caminhoExercicios);
     if (arqExercicios.is_open()) {
         std::string linha;
@@ -197,11 +196,11 @@ void Sistema::carregarDados() {
             std::string nome = partes[2];
             bool status = std::stoi(partes.back()) == 1;
             
-            if (tipo == 1 && partes.size() == 6) { // Cardio
+            if (tipo == 1 && partes.size() == 6) {
                 int duracao = std::stoi(partes[3]);
                 double caloriasPorMinuto = std::stod(partes[4]);
                 exercicios.push_back(new Cardio(id, nome, status, duracao, caloriasPorMinuto));
-            } else if (tipo == 2 && partes.size() == 8) { // Força
+            } else if (tipo == 2 && partes.size() == 8) {
                 double carga = std::stod(partes[3]);
                 int series = std::stoi(partes[4]);
                 int repeticoes = std::stoi(partes[5]);
@@ -212,7 +211,6 @@ void Sistema::carregarDados() {
         arqExercicios.close();
     }
     
-    // Carregar fichas
     std::ifstream arqFichas(caminhoFichas);
     if (arqFichas.is_open()) {
         std::string linha;
@@ -250,7 +248,6 @@ void Sistema::carregarDados() {
         arqFichas.close();
     }
     
-    // Carregar histórico
     std::ifstream arqHistorico(caminhoHistorico);
     if (arqHistorico.is_open()) {
         std::string linha;
@@ -280,7 +277,6 @@ void Sistema::carregarDados() {
 }
 
 void Sistema::salvarDados() {
-    // Salvar exercícios
     std::ofstream arqExercicios(caminhoExercicios);
     if (arqExercicios.is_open()) {
         for (Exercicio* e : exercicios) {
@@ -299,7 +295,6 @@ void Sistema::salvarDados() {
         arqExercicios.close();
     }
     
-    // Salvar fichas
     std::ofstream arqFichas(caminhoFichas);
     if (arqFichas.is_open()) {
         for (const Ficha& f : fichas) {
@@ -312,7 +307,6 @@ void Sistema::salvarDados() {
         arqFichas.close();
     }
     
-    // Salvar histórico
     std::ofstream arqHistorico(caminhoHistorico);
     if (arqHistorico.is_open()) {
         for (const Historico& h : historico) {
