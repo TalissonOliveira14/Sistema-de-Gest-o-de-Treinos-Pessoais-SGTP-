@@ -4,8 +4,10 @@ TARGET = sgtp
 SRCDIR = src
 BUILDDIR = build
 
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
-OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
+SOURCES = $(SRCDIR)/main.cpp $(SRCDIR)/Exercicio.cpp $(SRCDIR)/Cardio.cpp \
+          $(SRCDIR)/Forca.cpp $(SRCDIR)/Ficha.cpp $(SRCDIR)/Historico.cpp \
+          $(SRCDIR)/Sistema.cpp $(SRCDIR)/Utils.cpp
+OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 
 all: $(BUILDDIR) $(TARGET)
 
