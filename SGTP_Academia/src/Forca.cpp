@@ -1,6 +1,5 @@
 #include "Forca.h"
 #include <iostream>
-#include <sstream>
 #include <iomanip>
 
 Forca::Forca() : Exercicio(), carga(0.0), series(0), repeticoes(0), descanso(0) {}
@@ -29,14 +28,6 @@ void Forca::exibirDetalhes() const {
     std::cout << "Series: " << series << " | ";
     std::cout << "Repeticoes: " << repeticoes << " | ";
     std::cout << "Descanso: " << descanso << " s";
-}
-
-std::string Forca::toFileString() const {
-    std::ostringstream oss;
-    oss << 2 << ";" << id << ";" << nome << ";" << std::fixed << std::setprecision(2) 
-        << carga << ";" << series << ";" << repeticoes << ";" << descanso << ";" 
-        << (ativo ? 1 : 0);
-    return oss.str();
 }
 
 double Forca::getCarga() const {
