@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <iomanip>
+#include <iomanup>
 
 Sistema::Sistema() {
     caminhoExercicios = "data/exercicios.txt";
@@ -175,84 +175,150 @@ void Sistema::listarHistorico() const {
 }
 
 void Sistema::carregarDados() {
+    // Carregar exercícios
     std::ifstream arqExercicios(caminhoExercicios);
     if (arqExercicios.is_open()) {
         std::string linha;
         while (std::getline(arqExercicios, linha)) {
             if (linha.empty()) continue;
             
-            std::istringstream iss(linha);
-            std::string token;
-            std::vector<std::string> tokens;
+            std::vector<std::string> partes;
+            std::stringstream ss(linha);
+            std::string parte;
             
-            while (std::getline(iss, token, ';')) {
-                tokens.push_back(token);
+            while (std::getline(ss, parte, ';')) {
+                partes.push_back(parte);
             }
             
-            if (tokens.size() < 6) continue;
+            if (partes.size() < 6) continue;
             
-            int tipo = std::stoi(tokens[0]);
-            int id = std::stoi(tokens[1]);
-            std::string nome = tokens[2];
-            bool status = std::stoi(tokens[tokens.size() - 1]) == 1;
+            int tipo = std::stoi(partes[0]);
+            int id = std::stoi(partes[1]);
+            std::string nome = partes[2];
+            bool status = std::stoi(partes.back()) == 1;
             
-            if (tipo == 1 && tokens.size() == 6) {
-                int duracao = std::stoi(tokens[3]);
-                double caloriasPorMinuto = std::stod(tokens[4]);
+            if (tipo == 1 && partes.size() == 6) { // Cardio
+                int duracao = std::stoi(partes[3]);
+                double caloriasPorMinuto = std::stod(partes[4]);
                 exercicios.push_back(new Cardio(id, nome, status, duracao, caloriasPorMinuto));
-            } else if (tipo == 2 && tokens.size() == 8) {
-                double carga = std::stod(tokens[3]);
-                int series = std::stoi(tokens[4]);
-                int repeticoes = std::stoi(tokens[5]);
-                int descanso = std::stoi(tokens[6]);
+            } else if (tipo == 2 && partes.size() == 8) { // Força
+                double carga = std::stod(partes[3]);
+                int series = std::stoi(partes[4]);
+                int repeticoes = std::stoi(partes[5]);
+                int descanso = std::stoi(partes[6]);
                 exercicios.push_back(new Forca(id, nome, status, carga, series, repeticoes, descanso));
             }
         }
         arqExercicios.close();
     }
     
+    // Carregar fichas
     std::ifstream arqFichas(caminhoFichas);
     if (arqFichas.is_open()) {
         std::string linha;
         while (std::getline(arqFichas, linha)) {
             if (linha.empty()) continue;
-            fichas.push_back(Ficha::fromFileString(linha, exercicios));
+            
+            std::vector<std::string> partes;
+            std::stringstream ss(linha);
+            std::string parte;
+            
+            while (std::getline(ss, parte, ';')) {
+                partes.push_back(parte);
+            }
+            
+            if (partes.size() < 3) continue;
+            
+            int idFicha = std::stoi(partes[0]);
+            std::string nomeFicha = partes[1];
+            int totalExercicios = std::stoi(partes[2]);
+            
+            Ficha novaFicha(idFicha, nomeFicha);
+            
+            for (int i = 0; i < totalExercicios; i++) {
+                int idExercicio = std::stoi(partes[3 + i]);
+                for (Exercicio* e : exercicios) {
+                    if (e->getId() == idExercicio) {
+                        novaFicha.adicionarExercicio(e);
+                        break;
+                    }
+                }
+            }
+            
+            fichas.push_back(novaFicha);
         }
         arqFichas.close();
     }
     
+    // Carregar histórico
     std::ifstream arqHistorico(caminhoHistorico);
     if (arqHistorico.is_open()) {
         std::string linha;
         while (std::getline(arqHistorico, linha)) {
             if (linha.empty()) continue;
-            historico.push_back(Historico::fromFileString(linha));
+            
+            std::vector<std::string> partes;
+            std::stringstream ss(linha);
+            std::string parte;
+            
+            while (std::getline(ss, parte, ';')) {
+                partes.push_back(parte);
+            }
+            
+            if (partes.size() != 5) continue;
+            
+            std::string data = partes[0];
+            int idFicha = std::stoi(partes[1]);
+            std::string nomeFicha = partes[2];
+            double tempoTotal = std::stod(partes[3]);
+            double caloriasTotais = std::stod(partes[4]);
+            
+            historico.push_back(Historico(data, idFicha, nomeFicha, tempoTotal, caloriasTotais));
         }
         arqHistorico.close();
     }
 }
 
 void Sistema::salvarDados() {
+    // Salvar exercícios
     std::ofstream arqExercicios(caminhoExercicios);
     if (arqExercicios.is_open()) {
         for (Exercicio* e : exercicios) {
-            arqExercicios << e->toFileString() << std::endl;
+            if (Cardio* c = dynamic_cast<Cardio*>(e)) {
+                arqExercicios << 1 << ";" << e->getId() << ";" << e->getNome() << ";"
+                            << c->getDuracao() << ";" << std::fixed << std::setprecision(2)
+                            << c->getCaloriasPorMinuto() << ";" << (e->isAtivo() ? 1 : 0) << std::endl;
+            }
+            else if (Forca* f = dynamic_cast<Forca*>(e)) {
+                arqExercicios << 2 << ";" << e->getId() << ";" << e->getNome() << ";"
+                            << std::fixed << std::setprecision(2) << f->getCarga() << ";"
+                            << f->getSeries() << ";" << f->getRepeticoes() << ";"
+                            << f->getDescanso() << ";" << (e->isAtivo() ? 1 : 0) << std::endl;
+            }
         }
         arqExercicios.close();
     }
     
+    // Salvar fichas
     std::ofstream arqFichas(caminhoFichas);
     if (arqFichas.is_open()) {
         for (const Ficha& f : fichas) {
-            arqFichas << f.toFileString() << std::endl;
+            arqFichas << f.getId() << ";" << f.getNome() << ";" << f.getExercicios().size();
+            for (Exercicio* e : f.getExercicios()) {
+                arqFichas << ";" << e->getId();
+            }
+            arqFichas << std::endl;
         }
         arqFichas.close();
     }
     
+    // Salvar histórico
     std::ofstream arqHistorico(caminhoHistorico);
     if (arqHistorico.is_open()) {
         for (const Historico& h : historico) {
-            arqHistorico << h.toFileString() << std::endl;
+            arqHistorico << h.getData() << ";" << h.getIdFicha() << ";"
+                        << h.getNomeFicha() << ";" << std::fixed << std::setprecision(2)
+                        << h.getTempoTotal() << ";" << h.getCaloriasTotais() << std::endl;
         }
         arqHistorico.close();
     }
