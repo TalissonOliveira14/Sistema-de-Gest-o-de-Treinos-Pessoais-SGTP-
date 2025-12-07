@@ -24,7 +24,6 @@ public:
     virtual double calcularTempo() const = 0;
     virtual double calcularCalorias() const = 0;
     virtual void exibirDetalhes() const = 0;
-    virtual std::string toFileString() const = 0;
 };
 
 #endif
