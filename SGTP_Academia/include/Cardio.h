@@ -16,7 +16,6 @@ public:
     double calcularTempo() const override;
     double calcularCalorias() const override;
     void exibirDetalhes() const override;
-    std::string toFileString() const override;
     
     int getDuracao() const;
     double getCaloriasPorMinuto() const;
