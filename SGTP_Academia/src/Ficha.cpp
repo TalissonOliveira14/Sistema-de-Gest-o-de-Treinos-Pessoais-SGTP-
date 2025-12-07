@@ -25,7 +25,7 @@ void Ficha::adicionarExercicio(Exercicio* exercicio) {
 }
 
 void Ficha::removerExercicio(int index) {
-    if (index >= 0 && index < exercicios.size()) {
+    if (index >= 0 && static_cast<size_t>(index) < exercicios.size()) {
         exercicios.erase(exercicios.begin() + index);
     }
 }
