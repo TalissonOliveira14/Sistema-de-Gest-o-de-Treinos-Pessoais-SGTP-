@@ -21,9 +21,6 @@ public:
     double getTempoTotal() const;
     double getCaloriasTotais() const;
     
-    std::string toFileString() const;
-    static Historico fromFileString(std::string linha);
-    
     void exibir() const;
 };
 
