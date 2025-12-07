@@ -1,6 +1,5 @@
 #include "Cardio.h"
 #include <iostream>
-#include <sstream>
 #include <iomanip>
 
 Cardio::Cardio() : Exercicio(), duracao(0), caloriasPorMinuto(0.0) {}
@@ -26,14 +25,6 @@ void Cardio::exibirDetalhes() const {
     std::cout << "Status: " << (ativo ? "Ativo" : "Inativo") << " | ";
     std::cout << "Duracao: " << duracao << " min | ";
     std::cout << "Calorias/min: " << caloriasPorMinuto;
-}
-
-std::string Cardio::toFileString() const {
-    std::ostringstream oss;
-    oss << 1 << ";" << id << ";" << nome << ";" << duracao << ";" 
-        << std::fixed << std::setprecision(2) << caloriasPorMinuto << ";" 
-        << (ativo ? 1 : 0);
-    return oss.str();
 }
 
 int Cardio::getDuracao() const {
