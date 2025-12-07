@@ -4,8 +4,8 @@ TARGET = sgtp
 SRCDIR = src
 BUILDDIR = build
 
-SOURCES = $(SRCDIR)/main.cpp $(SRCDIR)/Exercício.cpp $(SRCDIR)/Cardio.cpp \
-          $(SRCDIR)/Forca.cpp $(SRCDIR)/Ficha.cpp $(SRCDIR)/Mistorico.cpp \
+SOURCES = $(SRCDIR)/main.cpp $(SRCDIR)/Exercicio.cpp $(SRCDIR)/Cardio.cpp \
+          $(SRCDIR)/Forca.cpp $(SRCDIR)/Ficha.cpp $(SRCDIR)/Historico.cpp \
           $(SRCDIR)/Sistema.cpp $(SRCDIR)/Utils.cpp
 OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 
